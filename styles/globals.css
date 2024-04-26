@@ -12,6 +12,10 @@
   header{
     @apply bg-green-500 text-white p-4 flex justify-between items-center;
   }
+
+  input{
+    @apply border-2 border-gray-300 rounded-md p-2;
+  }
   
   .headerLogo{
     @apply text-2xl font-bold;
@@ -21,8 +25,26 @@
     @apply flex flex-row gap-3 ;
   }
 
-  .headerNav li{
-    @apply text-xl hover:text-black bg-black bg-opacity-10 p-2 rounded-md hover:bg-opacity-20;
+  .navItem{
+    @apply text-xl hover:text-black bg-black bg-opacity-10 p-2 rounded-md hover:bg-opacity-20 text-center;
+  }
+  
+  .navItemDropdown{
+    @apply text-xl hover:text-black bg-black bg-opacity-10 p-2 rounded-md hover:bg-opacity-20 text-center flex gap-2 ;
+  }
+
+  .dropDownItem{
+    @apply block px-4 py-2 text-gray-800 hover:bg-gray-200;
+  }
+
+  .pageTitle{
+    @apply text-3xl font-bold text-center m-4;
+  }
+
+  
+
+  .loginForm{
+    @apply flex justify-center;
   }
 
 }

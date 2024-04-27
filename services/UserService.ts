@@ -22,10 +22,21 @@ const register = async (user: User) => {
     })
 };
 
+const getUserTodos = async (userId: number) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/userTodos/${userId}`,{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }})
+};
+
 
 const UserService = {
     login,
-    register
+    register,
+    getUserTodos
 };
 
 export default UserService;

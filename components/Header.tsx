@@ -23,6 +23,7 @@ const Header: React.FC = () => {
         sessionStorage.removeItem("loggedInUserDetails");
         sessionStorage.removeItem("loggedInUserToken");
         setIsLoggedIn(false);
+        router.push("/");
     }
 
     const handleProfileDropdownHover = (isOpen: boolean) => {

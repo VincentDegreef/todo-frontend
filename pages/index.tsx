@@ -11,8 +11,8 @@ const Home: React.FC = () => {
             </Head>
             <Header></Header>
             <main>
-                <h1>Home</h1>
-                <p>Welcome to the home page</p>
+                <h1 className="pageTitle">Home</h1>
+                <p className="text-center"> Welcome to the home page</p>
             </main>
         </>
     );

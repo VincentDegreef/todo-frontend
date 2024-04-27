@@ -14,3 +14,12 @@ export type StatusMessage = {
     message: string
     type: "error" | "success"
 };
+
+export type Todo = {
+    id?: number;
+    title: string;
+    description: string;
+    notStarted: boolean;
+    inProgress: boolean;
+    completed: boolean;
+};

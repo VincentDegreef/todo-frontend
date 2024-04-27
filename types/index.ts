@@ -23,3 +23,16 @@ export type Todo = {
     inProgress: boolean;
     completed: boolean;
 };
+
+export type Project = {
+    id?: number;
+    projectName: string;
+    projectDescription: string;
+    projectCreationDate: Date;
+    // todos: Todo[];
+};
+
+export type ProjectCreate = {
+    projectName: string;
+    projectDescription: string;
+};

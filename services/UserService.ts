@@ -32,11 +32,22 @@ const getUserTodos = async (userId: number) => {
         }})
 };
 
+const getUserProjects = async (userId: number) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/userProject/${userId}`,{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }})
+};
+
 
 const UserService = {
     login,
     register,
-    getUserTodos
+    getUserTodos,
+    getUserProjects
 };
 
 export default UserService;

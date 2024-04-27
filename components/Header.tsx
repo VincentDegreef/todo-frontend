@@ -57,6 +57,7 @@ const Header: React.FC = () => {
                                     </button>
                                         <div className={`absolute dropdown z-10 right-0 py-2 bg-white rounded-lg shadow-md ${isProfileDropdownOpen ? "" : "hidden"}`}>
                                             <button className="dropDownItem"><a href="/profile">Profile</a></button>
+                                            <button className="dropDownItem"><a href="/projects/overview">My Projects</a></button>
                                             <button className="dropDownItem" onClick={logout}>Logout</button>
                                         </div>
                                     </div>

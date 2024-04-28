@@ -1,4 +1,4 @@
-import { ProjectCreate } from "@/types";
+import { ProjectCreate, Todo } from "@/types";
 
 
 const createProject = async (project: ProjectCreate, userId: number) => {
@@ -13,9 +13,60 @@ const createProject = async (project: ProjectCreate, userId: number) => {
     })
 };
 
+const getProjectTasks = async (projectId: string) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/tasks/${projectId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    }); 
+};
+
+const deleteProject = async (projectId: number, userId: number) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/delete/${projectId}/${userId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+};
+
+const deleteTaskFromProject = async (projectId: number, taskId: number) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/deleteTask/${projectId}/${taskId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+};
+
+const createProjectTask = async (task: Todo ,projectId: string ) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/addTask/${projectId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(task)
+    });
+};
+
 
 const ProjectsService = {
-    createProject
+    createProject,
+    getProjectTasks,
+    deleteProject,
+    deleteTaskFromProject,
+    createProjectTask
+
+
 };
 
 export default ProjectsService;

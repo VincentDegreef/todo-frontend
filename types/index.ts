@@ -29,7 +29,9 @@ export type Project = {
     projectName: string;
     projectDescription: string;
     projectCreationDate: Date;
+    projectInviteCode: string;
     // todos: Todo[];
+    
 };
 
 export type ProjectCreate = {

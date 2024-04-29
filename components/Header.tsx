@@ -56,9 +56,13 @@ const Header: React.FC = () => {
                                     {loggedInUser}
                                     </button>
                                         <div className={`absolute dropdown z-10 right-0 py-2 bg-white rounded-lg shadow-md ${isProfileDropdownOpen ? "" : "hidden"}`}>
-                                            <button className="dropDownItem"><a href="/profile">Profile</a></button>
-                                            <button className="dropDownItem"><a href="/projects/overview">My Projects</a></button>
-                                            <button className="dropDownItem" onClick={logout}>Logout</button>
+                                            <li className="hover:bg-green-400"><button className="dropDownItem"><a href="/profile">Profile</a></button></li>
+                                            <li className="hover:bg-green-400"><button className="dropDownItem"><a href="/projects/overview">My Projects</a></button></li>
+                                            <li className="hover:bg-green-400"><button className="dropDownItem"><a href="/dashboard">Dashboard</a></button></li>
+                                            <li className="hover:bg-green-400"><button className="dropDownItem" onClick={logout}>Logout</button></li>
+                                            
+                                            
+                                            
                                         </div>
                                     </div>
                             </div>

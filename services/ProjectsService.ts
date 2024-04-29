@@ -58,13 +58,26 @@ const createProjectTask = async (task: Todo ,projectId: string ) => {
     });
 };
 
+const getAllProjects = async () => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+};
+
 
 const ProjectsService = {
     createProject,
     getProjectTasks,
     deleteProject,
     deleteTaskFromProject,
-    createProjectTask
+    createProjectTask,
+    getAllProjects
 
 
 };

@@ -4,21 +4,33 @@ import { FaUsers } from "react-icons/fa6";
 import { FaTasks } from "react-icons/fa";
 import { PiProjectorScreenDuotone } from "react-icons/pi";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 
 
 const Dashboard: React.FC = () => {
     const router = useRouter();
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        if(sessionStorage.getItem("loggedInUserDetails") === null){
+            setUserRole(null);
+            return;
+        }
+        const user = JSON.parse(sessionStorage.getItem("loggedInUserDetails") || '');
+        setUserRole(user.role);
+    }, []);
+
 
     return (
       <>
         <Head>
           <title>Dashboard</title>
           <meta name="description" content="Dashboard" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="public/favicon.ico" />
         </Head>
         <Header />
-        <main className="p-4">
+      {userRole === "ADMIN" &&(<main className="p-4">
           <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-gray-200 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
@@ -37,7 +49,11 @@ const Dashboard: React.FC = () => {
               <p className="mt-2 text-gray-600">Get an overview of all the tasks</p>
             </div>
           </div>
-        </main>
+        </main>)}
+        {userRole !== "ADMIN" &&(<main className="p-4">
+            <h1 className="pageTitle">Access Denied</h1>
+            <p className="pageTitle">You are not authorized to view this page</p>
+        </main>)}
       </>
     );
   };

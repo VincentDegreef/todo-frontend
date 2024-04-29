@@ -8,8 +8,20 @@ import useInterval from "use-interval";
 
 const AdminUsersOverview = () => {
     const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
+    const [userRole, setUserRole] = useState<string | null>(null);
+
 
     const fetchUsers = async () => {
+        if(sessionStorage.getItem("loggedInUserDetails") === null){
+            setUserRole(null);
+            return;
+        }
+        const user = JSON.parse(sessionStorage.getItem("loggedInUserDetails") || '');
+        setUserRole(user.role);
+
+        if(user.role !== "ADMIN"){
+            return;
+        }
         setStatusMessages([]);
         const response = await UserService.getAllUsers();
         if(response.ok){
@@ -34,7 +46,7 @@ const AdminUsersOverview = () => {
                 <meta name="description" content="Projects Overview" />
             </Head>
             <Header></Header>
-            <main>
+            {userRole === "ADMIN" &&(<main>
                 <div className="container mx-auto">
                     <h1 className="text-3xl font-semibold text-center mt-8 mb-4">Users Overview</h1>
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -70,7 +82,11 @@ const AdminUsersOverview = () => {
                         )}
                     </div>
                 </div>
-            </main>
+            </main>)}
+            {userRole !== "ADMIN" &&(<main className="p-4">
+                <h1 className="pageTitle">Access Denied</h1>
+                <p className="pageTitle">You are not authorized to view this page</p>
+            </main>)}
         </>
     );
 };

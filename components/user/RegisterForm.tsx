@@ -36,7 +36,8 @@ const RegisterForm: React.FC = () => {
         const user= {
             username,
             password,
-            email
+            email,
+            role: "USER"
         };
         console.log(user);
         const response = await UserService.register(user);

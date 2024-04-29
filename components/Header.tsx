@@ -1,12 +1,16 @@
 import { useRouter } from "next/router";
 import { use, useEffect, useState } from "react";
+import { MdAddTask } from "react-icons/md";
+
 
 
 const Header: React.FC = () => {
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+    const [userRole, setUserRole] = useState<string>("");
     const router = useRouter();
+    
 
     useEffect(() => {
         if(sessionStorage.getItem("loggedInUserDetails") === null){
@@ -15,6 +19,7 @@ const Header: React.FC = () => {
         }
         const user = JSON.parse(sessionStorage.getItem("loggedInUserDetails") || '');
         setLoggedInUser(user.username);
+        setUserRole(user.role);
         setIsLoggedIn(true);
 
     }, []);
@@ -34,13 +39,13 @@ const Header: React.FC = () => {
     return (
         <>
             <header>
-                <button onClick={()=> router.push("/")} className="headerLogo">ToDo</button>
+                <button onClick={()=> router.push("/")} className="headerLogo"><MdAddTask size={25} />ToDo</button>
                 
                 <nav>
                     <ul className="headerNav">
                         {isLoggedIn && (
                             <div className="headerNav">
-                                <button className="navItem"><a href="/todo/overview">To-Do</a> </button>
+                                <button className="navItem"><a href="/todo/overview">Tasks</a></button>
                                 <div
                                     className="relative"
                                     onMouseEnter={() => handleProfileDropdownHover(true)}
@@ -58,7 +63,7 @@ const Header: React.FC = () => {
                                         <div className={`absolute dropdown z-10 right-0 py-2 bg-white rounded-lg shadow-md ${isProfileDropdownOpen ? "" : "hidden"}`}>
                                             <li className="hover:bg-green-400"><button className="dropDownItem"><a href="/profile">Profile</a></button></li>
                                             <li className="hover:bg-green-400"><button className="dropDownItem"><a href="/projects/overview">My Projects</a></button></li>
-                                            <li className="hover:bg-green-400"><button className="dropDownItem"><a href="/dashboard">Dashboard</a></button></li>
+                                            {userRole === "ADMIN" &&(<li className="hover:bg-green-400"><button className="dropDownItem"><a href="/dashboard">Dashboard</a></button></li>)}
                                             <li className="hover:bg-green-400"><button className="dropDownItem" onClick={logout}>Logout</button></li>
                                             
                                             

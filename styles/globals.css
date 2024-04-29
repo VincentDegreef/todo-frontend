@@ -18,7 +18,7 @@
   }
   
   .headerLogo{
-    @apply text-2xl font-bold;
+    @apply text-2xl font-bold flex flex-row gap-2 hover:text-black justify-center items-center;
   }
   
   .headerNav{

@@ -47,12 +47,12 @@ const updateTodoCompleted = (todoId: number) => {
 };
 
 const getAllTodos = async () => {
-    // const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
     return await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/todoItems`,{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            // "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         }})
 };
 

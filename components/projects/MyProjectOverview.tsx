@@ -8,6 +8,8 @@ import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { FaTrashCan } from "react-icons/fa6";
 import ProjectsService from "@/services/ProjectsService";
+import { MdOutlineNewLabel } from "react-icons/md";
+import { MdConnectWithoutContact } from "react-icons/md";
 
 
 const MyProjectsOverview: React.FC = () => {
@@ -71,8 +73,9 @@ const MyProjectsOverview: React.FC = () => {
             <div className="container mx-auto">
                 <h1 className="text-3xl font-semibold text-center mt-8 mb-4">Projects</h1>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                        <div className="mb-2">
-                        <button onClick={handleCreateTaskClick} className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-4" aria-label="Create New Project">New Project</button>
+                        <div className="mb-2 flex flex-row justify-between">
+                            <button onClick={handleCreateTaskClick} className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-4 flex flex-row gap-1 items-center" aria-label="Create New Project"><MdOutlineNewLabel size={20} /> New Project</button>
+                            <button className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-4 flex flex-row gap-1 items-center"> <MdConnectWithoutContact size={20}/> Join Project</button>
                         </div>
                     {statusMessages.map((statusMessage, index) => (
                         <div key={index} className="text-center font-bold text-red-500">

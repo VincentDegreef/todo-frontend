@@ -16,6 +16,7 @@ interface ProjectTaskOverviewProps {
 }
 
 const ProjectTaskOverview: React.FC<ProjectTaskOverviewProps> = ({ projectId }) => {
+    const [projectTitle, setProjectTitle] = useState<string>("");
 
     const fetchProjectTasks = async () => {
         if(!projectId){
@@ -25,10 +26,18 @@ const ProjectTaskOverview: React.FC<ProjectTaskOverviewProps> = ({ projectId }) 
         const inProgressTodos: Todo[] = [];
         const completedTodos: Todo[] = [];
         
-        const response = await ProjectsService.getProjectTasks(projectId);
-        if(response.ok){
-            const data = await response.json();
-            data.forEach((todo: any) => {
+        const projectResponse = await ProjectsService.getProject(projectId);
+        if(projectResponse.ok){
+            const project = await projectResponse.json();
+
+            if(project === null){
+                return;
+            }
+            setProjectTitle(project.projectName);
+
+            const tasks = project.tasks;
+
+            tasks.forEach((todo: any) => {
                 if(todo.notStarted === true){
                     notStartedTodos.push(todo);
                 } else if(todo.inProgress === true){
@@ -39,8 +48,24 @@ const ProjectTaskOverview: React.FC<ProjectTaskOverviewProps> = ({ projectId }) 
                 }
             });
         } else {
-            console.log("Error fetching todos");
+            console.log("Error fetching project");
         }
+        // const response = await ProjectsService.getProjectTasks(projectId);
+        // if(response.ok){
+        //     const data = await response.json();
+        //     data.forEach((todo: any) => {
+        //         if(todo.notStarted === true){
+        //             notStartedTodos.push(todo);
+        //         } else if(todo.inProgress === true){
+        //             inProgressTodos.push(todo);
+        //         }
+        //         else if(todo.completed === true){
+        //             completedTodos.push(todo);
+        //         }
+        //     });
+        // } else {
+        //     console.log("Error fetching todos");
+        // }
 
         return [notStartedTodos, inProgressTodos, completedTodos];
 
@@ -93,7 +118,9 @@ const ProjectTaskOverview: React.FC<ProjectTaskOverviewProps> = ({ projectId }) 
                 <div className="m-4">
                     {isLoading && <p>Loading...</p>}
                     {error && <p>Error loading todos</p>}
+                    <h1 className="text-3xl text-center font-bold m-4 text-black">{projectTitle}</h1>
                     {data && (
+                        
                         <div className="grid grid-cols-3 gap-4">
                             <div className="border-x-4">
                                 <h2 className="text-2xl text-center border-b-4 p-2">Not started</h2>

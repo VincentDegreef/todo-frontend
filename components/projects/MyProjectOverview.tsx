@@ -10,10 +10,12 @@ import { FaTrashCan } from "react-icons/fa6";
 import ProjectsService from "@/services/ProjectsService";
 import { MdOutlineNewLabel } from "react-icons/md";
 import { MdConnectWithoutContact } from "react-icons/md";
+import JoinProjectPopup from "./joinProjectPopup";
 
 
 const MyProjectsOverview: React.FC = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isJoinPopupOpen, setIsJoinPopupOpen] = useState(false);
     const [userId, setUserId] = useState<number>(0);
     const router = useRouter();
     const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
@@ -25,6 +27,14 @@ const MyProjectsOverview: React.FC = () => {
 
     const handleClosePopup = () => {
         setIsPopupOpen(false);
+    };
+
+    const handleJoinProjectClick = () => {
+        setIsJoinPopupOpen(true);
+    };
+
+    const handleCloseJoinPopup = () => {
+        setIsJoinPopupOpen(false);
     };
 
     const toggleInviteCode = () => {
@@ -75,7 +85,7 @@ const MyProjectsOverview: React.FC = () => {
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                         <div className="mb-2 flex flex-row justify-between">
                             <button onClick={handleCreateTaskClick} className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-4 flex flex-row gap-1 items-center" aria-label="Create New Project"><MdOutlineNewLabel size={20} /> New Project</button>
-                            <button className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-4 flex flex-row gap-1 items-center"> <MdConnectWithoutContact size={20}/> Join Project</button>
+                            <button onClick={handleJoinProjectClick} className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-4 flex flex-row gap-1 items-center"> <MdConnectWithoutContact size={20}/> Join Project</button>
                         </div>
                     {statusMessages.map((statusMessage, index) => (
                         <div key={index} className="text-center font-bold text-red-500">
@@ -118,6 +128,7 @@ const MyProjectsOverview: React.FC = () => {
                         </div>
                     )}
                     {isPopupOpen && <CreateProjectPopup handleClosePopup={handleClosePopup} />}
+                    {isJoinPopupOpen && <JoinProjectPopup handleClosePopup={handleCloseJoinPopup} />}
                 </div>
             </div>
         </>

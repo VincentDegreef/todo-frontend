@@ -70,6 +70,28 @@ const getAllProjects = async () => {
 
 };
 
+const joinProject = async (inviteCode: string, userId: number) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/join/${userId}/${inviteCode}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+};
+
+const getProject = async (projectId: string) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/${projectId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+};
+
 
 const ProjectsService = {
     createProject,
@@ -77,7 +99,9 @@ const ProjectsService = {
     deleteProject,
     deleteTaskFromProject,
     createProjectTask,
-    getAllProjects
+    getAllProjects,
+    joinProject,
+    getProject
 
 
 };

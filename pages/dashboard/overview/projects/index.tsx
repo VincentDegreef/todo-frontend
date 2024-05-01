@@ -62,9 +62,9 @@ const AdminProjectOverview= () => {
                                             <th className="px-4 py-2">ID</th>
                                             <th className="px-4 py-2">Title</th>
                                             <th className="px-4 py-2">Description</th>
+                                            <th className="px-4 py-2">Project Owner</th>
                                             <th className="px-4 py-2">Created At</th>
                                             <th className="px-4 py-2">Invite Code</th>
-                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,6 +73,7 @@ const AdminProjectOverview= () => {
                                                 <td className="border px-4 py-2">{project.id}</td>
                                                 <td className="border px-4 py-2">{project.projectName}</td>
                                                 <td className="border px-4 py-2">{project.projectDescription}</td>
+                                                <td className="border px-4 py-2">{project.projectOwner}</td>
                                                 <td className="border px-4 py-2">{project.projectCreationDate.toString()}</td>
                                                 <td className="border px-4 py-2">{project.projectInviteCode}</td>
                                             </tr>

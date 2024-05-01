@@ -3,12 +3,18 @@ export type loginUser = {
     password: string;
 };
 
+export type role = {
+    id?: number;
+    name: string;
+
+};
+
 export type User = {
     id?: number;
     username: string;
     password: string;
     email: string;
-    role: string;
+    role: role;
 };
 
 export type StatusMessage = {
@@ -25,12 +31,15 @@ export type Todo = {
     completed: boolean;
 };
 
+
+
 export type Project = {
     id?: number;
     projectName: string;
     projectDescription: string;
     projectCreationDate: Date;
     projectInviteCode: string;
+    projectOwner: string;
     // todos: Todo[];
     
 };

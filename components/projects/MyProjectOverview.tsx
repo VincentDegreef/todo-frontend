@@ -10,7 +10,9 @@ import { FaTrashCan } from "react-icons/fa6";
 import ProjectsService from "@/services/ProjectsService";
 import { MdOutlineNewLabel } from "react-icons/md";
 import { MdConnectWithoutContact } from "react-icons/md";
-import JoinProjectPopup from "./joinProjectPopup";
+import JoinProjectPopup from "./JoinProjectPopup";
+import { VscDebugDisconnect } from "react-icons/vsc";
+
 
 
 const MyProjectsOverview: React.FC = () => {
@@ -20,6 +22,8 @@ const MyProjectsOverview: React.FC = () => {
     const router = useRouter();
     const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [showInviteCode, setShowInviteCode] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("");
+
 
     const handleCreateTaskClick = () => {
         setIsPopupOpen(true);
@@ -48,6 +52,7 @@ const MyProjectsOverview: React.FC = () => {
         }
         const userDetails = JSON.parse(sessionStorage.getItem('loggedInUserDetails') ?? '');
         setUserId(userDetails.id);
+        setUsername(userDetails.username);
 
         const response = await UserService.getUserProjects(userId);
         if(response.ok){
@@ -71,6 +76,16 @@ const MyProjectsOverview: React.FC = () => {
         }
 
     } 
+
+    const handleLeaveProject = async (projectId: number) => {
+        const response = await ProjectsService.leaveProject(projectId, userId);
+        if(response.ok){
+            console.log("Left project");
+            mutate('userProjects', fetchUserProjects());
+        } else {
+            console.log("Error leaving project");
+        }
+    }
 
     const { data, isLoading, error } = useSWR('userProjects', fetchUserProjects)
 
@@ -119,7 +134,8 @@ const MyProjectsOverview: React.FC = () => {
 
                                             <div className="flex flex-col justify-between">
                                                 <FaArrowRight title="Open Project" size={25} className="hover:text-black" onClick={()=> router.push(`/projects/${project.id}`)}/>
-                                                <FaTrashCan title="Delete task" onClick={() => handleDeleteProject(project.id!)} size={25} className="text-red-500 text-xl hover:text-red-700 cursor-pointer" />
+                                                {username === project.projectOwner && (<FaTrashCan title="Delete Project" onClick={() => handleDeleteProject(project.id!)} size={25} className="text-red-500 text-xl hover:text-red-700 cursor-pointer" />)}
+                                                {username !== project.projectOwner && (<VscDebugDisconnect title="Leave Project" onClick={()=> handleLeaveProject(project.id!)} size={25} className="text-black text-xl hover:text-red-500 cursor-pointer"/>)}
                                             </div>
                                         </div>
                                     ))}

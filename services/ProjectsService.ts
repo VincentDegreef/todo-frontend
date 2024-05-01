@@ -92,6 +92,17 @@ const getProject = async (projectId: string) => {
     });
 };
 
+const leaveProject = async (projectId: number, userId: number) => {
+    const token = JSON.parse(sessionStorage.getItem('loggedInUserToken') ?? '').token;
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/leave/${userId}/${projectId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+};
+
 
 const ProjectsService = {
     createProject,
@@ -101,7 +112,8 @@ const ProjectsService = {
     createProjectTask,
     getAllProjects,
     joinProject,
-    getProject
+    getProject,
+    leaveProject
 
 
 };

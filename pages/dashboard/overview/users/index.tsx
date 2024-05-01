@@ -27,7 +27,6 @@ const AdminUsersOverview = () => {
         const response = await UserService.getAllUsers();
         if(response.ok){
             const users = await response.json();
-
             return users;
 
         }
@@ -75,7 +74,7 @@ const AdminUsersOverview = () => {
                                                 <td className="border px-4 py-2">{user.id}</td>
                                                 <td className="border px-4 py-2">{user.username}</td>
                                                 <td className="border px-4 py-2">{user.email}</td>
-                                                <td className="border px-4 py-2">{userRole}</td>
+                                                <td className="border px-4 py-2">{user.role.name}</td>
                                             </tr>
                                         ))}
                                     </tbody>
